@@ -1,0 +1,1 @@
+# regulamin-htale-online
