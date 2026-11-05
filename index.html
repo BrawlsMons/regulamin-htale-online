@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTALE.ONLINE — Oficjalna Encyklopedia & Wiki Serwera</title>
+  <meta name="description" content="Kompletny przewodnik po serwerze HTALE.ONLINE: wojny miast, przejmowanie działek, system nacji, dungeony AoT i Atlantyda, magiczne bronie, customowe TNT i gospodarka.">
+  <link rel="icon" type="image/png" href="assets/mcserv/klinga_oblezenia.png">
+
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Dynamiczne Tło Canvas i Winieta -->
+  <canvas id="canvas-particles"></canvas>
+  <div class="bg-vignette"></div>
+
+  <!-- Kontener powiadomień Toast -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- GÓRNY PASEK NAWIGACJI -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="brand-logo">H</div>
+        <div class="brand-text">
+          <h1>HTALE<span style="color: var(--accent-gold)">.ONLINE</span></h1>
+          <span class="brand-badge">WIKI & PORADNIK</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item"><a href="#wojny" class="nav-link active">⚔️ Wojny & PvP</a></li>
+        <li class="nav-item"><a href="#miasta" class="nav-link">🏰 Miasta</a></li>
+        <li class="nav-item"><a href="#panstwa" class="nav-link">👑 Państwa</a></li>
+        <li class="nav-item"><a href="#dungeony" class="nav-link">🐲 Dungeony & Bossowie</a></li>
+        <li class="nav-item"><a href="#przedmioty" class="nav-link">✨ Custom Przedmioty</a></li>
+        <li class="nav-item"><a href="#mechaniki" class="nav-link">⚙️ Gospodarka</a></li>
+        <li class="nav-item"><a href="#komendy" class="nav-link">📜 Komendy</a></li>
+        <li class="nav-item"><a href="#regulamin" class="nav-link" style="color: #fbbf24;">⚖️ Kodeks Prawny</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="search-wrapper">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="global-search" class="search-input" placeholder="Szukaj w wiki..." autocomplete="off">
+        </div>
+
+        <button class="sound-toggle-btn" id="btn-toggle-sound" title="Włącz/wyłącz dźwięki">
+          🔊
+        </button>
+
+        <button class="btn-server-ip" id="btn-copy-ip" title="Kliknij, aby skopiować IP">
+          <span>IP:</span> play.htale.online
+        </button>
+
+        <button class="btn-hamburger" id="btn-hamburger" aria-label="Menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO BANNER -->
+  <header class="hero-section">
+    <div class="hero-container">
+      <div class="hero-pill">
+        <span class="pulse-dot"></span>
+        <span>OFICJALNE KOMPENDIUM WIEDZY • WERSJA MINECRAFT 1.21+</span>
+      </div>
+
+      <h1 class="hero-title">
+        Wojny Miast, Potężne Imperia<br>
+        <span class="gradient-text-gold">& Legendarny Świat RPG</span>
+      </h1>
+
+      <p class="hero-description">
+        Poznaj wszystkie tajniki serwera <strong>HTALE.ONLINE</strong>. Odkryj zasady oblężeń,
+        przejmowania terytoriów, customowe ładunki wybuchowe, magiczne artefakty, dungeony inspirowane
+        <em>Attack on Titan</em> oraz głębiny Atlantydy.
+      </p>
+
+      <div class="hero-quick-links">
+        <a href="#wojny" class="quick-btn primary">
+          ⚔️ Jak Działają Wojny?
+        </a>
+        <a href="http://play.htale.online:8100/" target="_blank" rel="noopener noreferrer" class="quick-btn secondary">
+          🗺️ Trójwymiarowa Mapa Świata
+        </a>
+        <a href="https://dc.htale.online" target="_blank" rel="noopener noreferrer" class="quick-btn discord">
+          💬 Dołącz do Discorda
+        </a>
+      </div>
+
+      <!-- Szybkie wskaźniki serwera -->
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171;">⚔️</div>
+          <div>
+            <div class="stat-value">18:00 – 22:00</div>
+            <div class="stat-label">Codzienne Okno Walki PvP</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">🏰</div>
+          <div>
+            <div class="stat-value">Do 384 Działek</div>
+            <div class="stat-label">Maksymalny Rozmiar Miasta</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🧨</div>
+          <div>
+            <div class="stat-value">5 Wojennych TNT</div>
+            <div class="stat-label">Taktyczne Ładunki Wybuchowe</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(192, 132, 252, 0.15); color: #c084fc;">🐲</div>
+          <div>
+            <div class="stat-value">3 Główne Dungeony</div>
+            <div class="stat-label">Rajdy z Bossami & Skarby</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- GŁÓWNA ZAWARTOŚĆ -->
+  <main class="main-content">
+    
+    <!-- BOCZNY SPIS TREŚCI (STICKY SIDEBAR) -->
+    <aside class="sidebar">
+      <div class="sidebar-nav">
+        <div class="sidebar-title">Spis Treści</div>
+        <ul class="sidebar-list">
+          <li class="sidebar-item active"><a href="#wojny">⚔️ Wojny & PvP</a></li>
+          <li class="sidebar-item"><a href="#tnt-taktyczne">🧨 Wojenne TNT</a></li>
+          <li class="sidebar-item"><a href="#miasta">🏰 Działanie Miast</a></li>
+          <li class="sidebar-item"><a href="#limity-miast">📊 Limity i Poziomy</a></li>
+          <li class="sidebar-item"><a href="#panstwa">👑 Państwa & Nacje</a></li>
+          <li class="sidebar-item"><a href="#dungeony">🐲 Dungeony & Bossowie</a></li>
+          <li class="sidebar-item"><a href="#dungeon-krysztal">💎 Kryształowa Jaskinia</a></li>
+          <li class="sidebar-item"><a href="#dungeon-atlantyda">🌊 Zatopiona Atlantyda</a></li>
+          <li class="sidebar-item"><a href="#dungeon-zamek">🏰 Bastion Umarłych</a></li>
+          <li class="sidebar-item"><a href="#przedmioty">✨ Custom Przedmioty</a></li>
+          <li class="sidebar-item"><a href="#mechaniki">💰 Ekonomia & Zasady</a></li>
+          <li class="sidebar-item"><a href="#komendy">📜 Kompendium Komend</a></li>
+          <li class="sidebar-item"><a href="#regulamin" style="color: #fbbf24; font-weight: 800;">⚖️ Kodeks Prawny</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- GŁÓWNA STRUKTURA ARTYKUŁÓW WIKI -->
+    <div class="wiki-content">
+
+      <!-- ============================================================
+           SEKCJA 1: WOJNY & WALKA (WARFARE & PVP)
+           ============================================================ -->
+      <section id="wojny" class="wiki-section" data-searchable="wojny walka pvp harmonogram przejmowanie dzialek takeoverclaim wiezienie pow combatlogx">
+        <div class="section-header">
+          <span class="section-tag">Mechanika Bojowa</span>
+          <h2 class="section-title">⚔️ Działania Wojen & System PvP</h2>
+          <p class="section-desc">
+            Walka na serwerze to nie bezmyślne bicie się pod spawnem — to taktyczne oblężenia,
+            planowane najazdy, kradzież terytorium wrogich miast oraz zarządzanie jeńcami wojennymi.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <!-- Karta 1: Harmonogram PvP -->
+          <div class="content-card glow-red">
+            <span class="card-badge badge-red">Automatyczne Okno</span>
+            <h3 class="card-title">⏰ Harmonogram Walki PvP</h3>
+            <p>
+              Na całym serwerze walka pomiędzy graczami podlega ścisłemu harmonogramowi czasowemu.
+              Poza wyznaczonymi godzinami nikt nie może Cię zaatakować, co pozwala na bezpieczną rozbudowę,
+              handel i eksplorację.
+            </p>
+            <div class="alert-box alert-red">
+              <span class="alert-icon">⚡</span>
+              <div>
+                <strong>Godziny PvP: 18:00 – 22:00 (czasu polskiego).</strong><br>
+                Punktualnie o 18:00 serwer ogłasza włączenie PvP na czacie. Status sprawdzisz komendą <code>/pvp</code>.
+              </div>
+            </div>
+            <p class="text-muted" style="font-size: 0.88rem;">
+              Próba uderzenia innego gracza poza harmonogramem zostaje zablokowana z informacją o godzinach walki.
+            </p>
+          </div>
+
+          <!-- Karta 2: Przejmowanie Terenu -->
+          <div class="content-card glow-gold">
+            <span class="card-badge badge-gold">Najazdy Miast</span>
+            <h3 class="card-title">🏴 Przejmowanie Działek (/t takeoverclaim)</h3>
+            <p>
+              Miasta nie są nietykalne! W trakcie wojny możesz odebrać terytorium innemu miastu
+              za pomocą komendy <code>/t takeoverclaim</code>.
+            </p>
+            <ul style="margin: 0.8rem 0 0.8rem 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
+              <li><strong>Status Wojny:</strong> Obie strony muszą należeć do nacji, które wzajemnie ogłosiły się wrogami (<code>/n enemy add &lt;nacja&gt;</code>).</li>
+              <li><strong>Wiek Miasta:</strong> Miasto atakujące musi istnieć minimum <strong>1 dzień</strong> (ochrona przed zakładaniem miast-trolli).</li>
+              <li><strong>Ochrona Homeblock:</strong> Teren wokół serca miasta (Homeblock) jest trwale chroniony przed kradzieżą.</li>
+              <li><strong>Cooldown:</strong> Przejęcie kolejnego chunka można wykonać raz na 1 minutę.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Karta 3: System Jeńców Wojennych -->
+        <div class="content-card glow-purple" style="margin-top: 1.5rem;">
+          <span class="card-badge badge-purple">POW (Prisoner of War)</span>
+          <h3 class="card-title">⛓️ System Więzienia i Jeńców Wojennych</h3>
+          <p>
+            Napadając na wrogie miasto podejmujesz ogromne ryzyko. Jeśli agresor zginie na terenie broniącego się miasta,
+            nie respawnuje się w domu ani na spawnie — <strong>zostaje natychmiast osadzony w więzieniu tego miasta!</strong>
+          </p>
+
+          <div class="grid-3" style="margin-top: 1.25rem;">
+            <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-glass);">
+              <div style="color: var(--accent-purple); font-weight: 800; font-size: 1.1rem; margin-bottom: 0.25rem;">1 Godzina</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">Standardowy czas odsiadki jeńca wojennego (burmistrz może wyznaczyć do 2h).</div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-glass);">
+              <div style="color: var(--accent-red); font-weight: 800; font-size: 1.1rem; margin-bottom: 0.25rem;">Pełna Blokada</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">W lochu zablokowane są perły enderu, owoce chorusa oraz ucieczka przez <code>/town leave</code>.</div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-glass);">
+              <div style="color: var(--accent-gold); font-weight: 800; font-size: 1.1rem; margin-bottom: 0.25rem;">Kaucja ($500 )</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted);">Jeniec może wykupić się wpłacając kaucję (zwykły jeniec $500, schwytany burmistrz oraz królowie kosztują dużo więcej).</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anty Logout & RegenTNT -->
+        <div class="grid-2" style="margin-top: 1.5rem;">
+          <div class="content-card">
+            <span class="card-badge badge-red">CombatLogX</span>
+            <h3 class="card-title">🚫 Ochrona Przed Ucieczką (Anty-Logout)</h3>
+            <p>
+              Podczas walki otrzymujesz tag bojowy wyświetlany na pasku BossBar.
+              Wylogowanie się z gry w trakcie walki oznacza <strong>natychmiastową śmierć</strong>,
+              upuszczenie przedmiotów według zasad kary śmierci i naliczenie punktu ucieczki.
+            </p>
+          </div>
+
+          <div class="content-card">
+            <span class="card-badge badge-blue">RegenTNT</span>
+            <h3 class="card-title">⏳ Automatyczna Odbudowa Terenu</h3>
+            <p>
+              Dzięki silnikowi <strong>RegenTNT</strong> wojny nie niszczą na stałe mapy.
+              Każdy blok rozbity przez TNT, creepera czy kotwicę odnawia się automatycznie po <strong>5 minutach (300 s)</strong>!
+              Surowce z rozbitych bloków nie wypadają, zapobiegając duplikacji materiałów.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 2: WOJENNE TNT (TACTICAL TNT SYSTEM)
+           ============================================================ -->
+      <section id="tnt-taktyczne" class="wiki-section" data-searchable="tnt sejsmiczne napalmowe kriogeniczne emp prozniowe wybuchy miotanie">
+        <div class="section-header">
+          <span class="section-tag">Arsenał Wyburzeniowy</span>
+          <h2 class="section-title">🧨 5 Rodzajów Wojennych TNT</h2>
+          <p class="section-desc">
+            Serwer dysponuje w pełni autorskim kodem 5 specjalistycznych ładunków wybuchowych (McServCore).
+            Możesz je stawiać na ziemi (PPM na blok) lub <strong>rzucać jak granaty (PPM w powietrze lub Shift+PPM)</strong>!
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <!-- Sejsmiczne TNT -->
+          <div class="content-card glow-gold" data-searchable="sejsmiczne tnt wyburzanie mury">
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/seismic_tnt.png" alt="Sejsmiczne TNT" class="item-img">
+            </div>
+            <span class="card-badge badge-gold">Burzące</span>
+            <h3 class="card-title">Sejsmiczne TNT</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Ciężki ładunek kruszący mury obronne, wybijający wrogów w powietrze falą uderzeniową.
+            </p>
+            <div class="mc-tooltip">
+              <div class="mc-gold mc-bold">Siła Wybuchu: 6.0 (Kruszy bloki)</div>
+              <div class="mc-gray">• Wyrzuca wrogów wysoko w powietrze</div>
+              <div class="mc-yellow">• Spowolnienie III na 6 sekund</div>
+              <div class="mc-yellow">• Mdłości (Nausea) na 8 sekund</div>
+              <div class="mc-red">• 14.0 pkt obrażeń fizycznych</div>
+            </div>
+          </div>
+
+          <!-- Napalmowe TNT -->
+          <div class="content-card glow-red" data-searchable="napalmowe tnt ogien lawa">
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/napalm_tnt.png" alt="Napalmowe TNT" class="item-img">
+            </div>
+            <span class="card-badge badge-red">Zapalające</span>
+            <h3 class="card-title">Napalmowe TNT</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Zalewa cały teren płonącym napalmem i rozpala ogień w promieniu 5 bloków.
+            </p>
+            <div class="mc-tooltip">
+              <div class="mc-red mc-bold">Siła Wybuchu: 4.0 (Rozlewa ogień)</div>
+              <div class="mc-gray">• Promień rozlania płomieni: 5 bloków</div>
+              <div class="mc-yellow">• Podpalenie graczy na pełne 10 sekund</div>
+              <div class="mc-yellow">• Spowolnienie II na 5 sekund</div>
+              <div class="mc-red">• 16.0 pkt bezpośrednich obrażeń ognia</div>
+            </div>
+          </div>
+
+          <!-- Kriogeniczne TNT -->
+          <div class="content-card glow-blue" data-searchable="kriogeniczne tnt mroz lod snieg zamrazanie">
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/cryo_tnt.png" alt="Kriogeniczne TNT" class="item-img">
+            </div>
+            <span class="card-badge badge-blue">Arktyczne</span>
+            <h3 class="card-title">Kriogeniczne TNT</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Mroźna fala zamrażająca teren. Zamienia wodę w lód i nakłada głęboki mróz bez niszczenia budowli.
+            </p>
+            <div class="mc-tooltip">
+              <div class="mc-aqua mc-bold">Siła Wybuchu: 3.5 (NIE niszczy bloków)</div>
+              <div class="mc-gray">• Pokrywa teren śniegiem, ścina wodę w lód</div>
+              <div class="mc-aqua">• Natychmiast zapełnia pasek zamarzania</div>
+              <div class="mc-yellow">• Spowolnienie IV na 6 sekund</div>
+              <div class="mc-yellow">• Zmęczenie kopaniem III na 8 sekund</div>
+            </div>
+          </div>
+
+          <!-- Impulsowe TNT (EMP) -->
+          <div class="content-card glow-purple" data-searchable="emp impulsowe tnt tarcze perly mikstury">
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/emp_tnt.png" alt="Impulsowe TNT" class="item-img">
+            </div>
+            <span class="card-badge badge-purple">Anty-Magia</span>
+            <h3 class="card-title">Impulsowe TNT (EMP)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Fala elektromagnetyczna neutralizująca wyposażenie bojowe, tarcze i mikstury wrogów.
+            </p>
+            <div class="mc-tooltip">
+              <div class="mc-light-purple mc-bold">Siła Wybuchu: 3.0 (NIE niszczy bloków)</div>
+              <div class="mc-red">• Blokuje tarcze wrogów na 10 sekund</div>
+              <div class="mc-red">• Wymusza cooldown perły enderu (10 s)</div>
+              <div class="mc-gold">• Usuwa pozytywne mikstury (Speed, Siła, Regen)</div>
+              <div class="mc-gray">• Oślepienie 4 s + Świecenie (Glowing) 12 s</div>
+            </div>
+          </div>
+
+          <!-- Próżniowe TNT -->
+          <div class="content-card glow-purple" data-searchable="prozniowe tnt osobliwosc czarna dziura zassanie">
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/void_tnt.png" alt="Próżniowe TNT" class="item-img">
+            </div>
+            <span class="card-badge badge-purple">Osobliwość</span>
+            <h3 class="card-title">Próżniowe TNT</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Miniaturowa czarna dziura. Wciąga do środka graczy, strzały i moby, kończąc implozją.
+            </p>
+            <div class="mc-tooltip">
+              <div class="mc-dark-purple mc-bold">Siła Wybuchu: 5.0 (Ciężka implozja)</div>
+              <div class="mc-light-purple">• Wir grawitacyjny w promieniu 10 bloków</div>
+              <div class="mc-red">• 18.0 pkt miażdżących obrażeń</div>
+              <div class="mc-dark-gray">• Ciemność (Darkness) na 6 sekund</div>
+              <div class="mc-gray">• Osłabienie II na 8 sekund</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 3: DZIAŁANIE I LIMITY MIAST (TOWNS & LIMITS)
+           ============================================================ -->
+      <section id="miasta" class="wiki-section" data-searchable="miasta towny dzialki claimy zakladanie miasta podatki burmistrz">
+        <div class="section-header">
+          <span class="section-tag">Społeczność & Architektura</span>
+          <h2 class="section-title">🏰 Działanie Miast (Towny)</h2>
+          <p class="section-desc">
+            Miasta to serce życia na serwerze. Zakładając miasto tworzysz bezpieczną przystań,
+            wyznaczasz działki dla przyjaciół, pobierasz podatki i wznosisz monumentalne budowle.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="content-card glow-gold">
+            <span class="card-badge badge-gold">Start</span>
+            <h3 class="card-title">💰 Koszty & Utrzymanie</h3>
+            <ul style="margin-left: 1.2rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
+              <li><strong>Założenie miasta:</strong> <span style="color: #fbbf24; font-weight: 700;">$50</span> (<code>/t new &lt;nazwa&gt;</code>)</li>
+              <li><strong>Utrzymanie dzienne:</strong> <span style="color: #34d399; font-weight: 700;">$0</span> (brak ryzyka upadku w nocy!)</li>
+              <li><strong>Zajęcie działki (claim):</strong> <span style="color: #fbbf24;">$15</span> bazowo (+10% za każdy kolejny chunk)</li>
+              <li><strong>Zwrot za oddanie:</strong> <span style="color: #38bdf8;">$5</span> (<code>/t unclaim</code>)</li>
+              <li><strong>Koszt posterunku:</strong> <span style="color: #fbbf24;">$100</span> (<code>/t claim outpost</code>)</li>
+            </ul>
+          </div>
+
+          <div class="content-card glow-blue">
+            <span class="card-badge badge-blue">Administracja</span>
+            <h3 class="card-title">🛡️ Flagi & Bezpieczeństwo</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Jako burmistrz masz pełną kontrolę nad prawami panującymi w Twoich granicach:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><code>/t toggle pvp</code> — włącza lub wyłącza PvP na terenie miasta</li>
+              <li><code>/t toggle explosion</code> — ochrona przed niszczeniem terenu</li>
+              <li><code>/t toggle fire</code> — blokada rozprzestrzeniania ognia</li>
+              <li><code>/t toggle mobs</code> — blokada spawnowania wrogich potworów</li>
+            </ul>
+          </div>
+
+          <div class="content-card glow-purple">
+            <span class="card-badge badge-purple">Zarządzanie</span>
+            <h3 class="card-title">👥 Rangi Mieszkańców</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Możesz nadawać zaufanym graczom specjalne uprawnienia miejskie:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><strong>Asystent:</strong> Prawa do claimowania, zapraszania i wyrzucania</li>
+              <li><strong>Szeryf:</strong> Nadzoruje więzienie miejskie i łapie przestępców</li>
+              <li><strong>Budowniczy:</strong> Uprawnienia do edycji na działkach publicznych</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tabela poziomów miast -->
+        <div id="limity-miast" style="margin-top: 2.5rem;">
+          <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.6rem;">📊 Hierarchia Poziomów Miast i Limity Działek</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem;">
+            Im więcej mieszkańców liczy Twoje miasto, tym wyższy tytuł otrzymuje burmistrz, a miasto zyskuje
+            automatycznie ogromne pakiety darmowych działek (1 chunk = 16x16 bloków) oraz prawo do budowy posterunków.
+          </p>
+
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Mieszkańcy</th>
+                  <th>Ranga Miasta</th>
+                  <th>Tytuł Burmistrza</th>
+                  <th>Darmowe Działki (Chunki)</th>
+                  <th>Maks. Posterunki (Outposty)</th>
+                  <th>Limit Zakupu Bonusów</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: #f87171;">0</strong></td>
+                  <td>Ruiny</td>
+                  <td>Duch</td>
+                  <td>1 chunk</td>
+                  <td>0</td>
+                  <td>Do 500 działek</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #fbbf24;">1</strong></td>
+                  <td>Osada</td>
+                  <td>Sołtys</td>
+                  <td>32 chunki (8 192 m²)</td>
+                  <td>1</td>
+                  <td>Do 500 działek</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #fbbf24;">2</strong></td>
+                  <td>Wioska</td>
+                  <td>Wójt</td>
+                  <td>64 chunki (16 384 m²)</td>
+                  <td>2</td>
+                  <td>Do 500 działek</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #38bdf8;">4</strong></td>
+                  <td>Miasteczko</td>
+                  <td>Burmistrz</td>
+                  <td>128 chunków (32 768 m²)</td>
+                  <td>3</td>
+                  <td>Do 500 działek</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #38bdf8;">6</strong></td>
+                  <td>Miasto</td>
+                  <td>Baron</td>
+                  <td>192 chunki (49 152 m²)</td>
+                  <td>4</td>
+                  <td>Do 500 działek</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #c084fc;">8</strong></td>
+                  <td>Wielkie Miasto</td>
+                  <td>Hrabia</td>
+                  <td>256 chunków (65 536 m²)</td>
+                  <td>5</td>
+                  <td>Do 500 działek</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #34d399;">12+</strong></td>
+                  <td>Metropolia</td>
+                  <td>Książę</td>
+                  <td>384 chunki (98 304 m²)</td>
+                  <td>6</td>
+                  <td>Do 500 działek</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Interaktywny Kalkulator -->
+          <div class="content-card glow-gold" style="margin-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+            <div>
+              <h4 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.35rem;">🧮 Interaktywny Kalkulator Poziomu</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted);">
+                Wpisz planowaną liczbę mieszkańców, aby sprawdzić przysługujące korzyści:
+              </p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <label for="calc-residents" style="font-size: 0.85rem; font-weight: 700;">Liczba osób:</label>
+                <input type="number" id="calc-residents" value="6" min="0" max="100" style="width: 70px; background: rgba(0,0,0,0.5); border: 1px solid var(--accent-gold); color: #fff; padding: 0.4rem; border-radius: 8px; font-weight: 800; text-align: center;">
+              </div>
+
+              <div style="background: rgba(0,0,0,0.3); padding: 0.6rem 1.2rem; border-radius: 10px; border: 1px solid var(--border-glass); font-size: 0.88rem;">
+                Status: <strong id="calc-title" style="color: var(--accent-gold);">Miasto</strong> •
+                Tytuł: <strong id="calc-mayor" style="color: #fff;">Baron</strong> •
+                Limit: <strong id="calc-blocks" style="color: #38bdf8;">192 chunki</strong> •
+                Posterunki: <strong id="calc-outposts" style="color: #34d399;">4</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 4: PAŃSTWA / NACJE (NATIONS)
+           ============================================================ -->
+      <section id="panstwa" class="wiki-section" data-searchable="panstwa nacje sojusze imperium krolestwo unia stolica bluemap">
+        <div class="section-header">
+          <span class="section-tag">Wielka Polityka</span>
+          <h2 class="section-title">👑 Państwa & Nacje (Nations)</h2>
+          <p class="section-desc">
+            Samotne miasto jest łatwym łupem dla koalicji wojennych.
+            Łącząc miasta w Państwa tworzycie zjednoczone imperia, otrzymujecie dodatkowe bonusy do działek
+            oraz możecie oficjalnie wypowiadać wojny innym mocarstwom.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="content-card glow-gold">
+            <span class="card-badge badge-gold">Zarządzanie Nacją</span>
+            <h3 class="card-title">🏛️ Tworzenie i Przywileje</h3>
+            <ul style="margin-left: 1.2rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
+              <li><strong>Koszt założenia:</strong> <span style="color: #fbbf24; font-weight: 700;">$1000</span> (<code>/n new &lt;nazwa&gt;</code>)</li>
+              <li><strong>Utrzymanie nacji:</strong> <span style="color: #34d399; font-weight: 700;">$0</span> (brak podatku dziennego)</li>
+              <li><strong>Zapraszanie miast:</strong> <code>/n add &lt;miasto&gt;</code></li>
+              <li><strong>Własny kolor na mapie:</strong> <code>/n set mapcolor &lt;kolor&gt;</code> (dynamiczne granice na BlueMap!)</li>
+              <li><strong>Bonus działek:</strong> Każde miasto w nacji zyskuje darmowy zastrzyk działek!</li>
+            </ul>
+          </div>
+
+          <div class="content-card glow-red">
+            <span class="card-badge badge-red">Polityka Zagraniczna</span>
+            <h3 class="card-title">⚔️ Sojusze i Deklaracja Wojen</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Status dyplomatyczny nacji ma kluczowe znaczenie podczas bitew:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><code>/n ally add &lt;nacja&gt;</code> — zawarcie paktu sojuszniczego (zakaz bicia się)</li>
+              <li><code>/n enemy add &lt;nacja&gt;</code> — <strong>ogłoszenie stanu wojny</strong>. Wrogie nacje mogą przejmować swoje działki komendą <code>/t takeoverclaim</code>!</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tabela poziomów nacji -->
+        <div style="margin-top: 2rem;">
+          <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.6rem;">📈 Poziomy Mocarstw i Premie Terytorialne</h3>
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Liczba Mieszkańców Nacji</th>
+                  <th>Typ Państwa</th>
+                  <th>Tytuł Przywódcy</th>
+                  <th>Bonus Działek dla Każdego Miasta</th>
+                  <th>Bonusowe Posterunki</th>
+                  <th>Strefa Wpływów</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>0</strong></td>
+                  <td>Nacja</td>
+                  <td>Przywódca</td>
+                  <td><span style="color: #fbbf24; font-weight: 700;">+16 działek</span></td>
+                  <td>+0</td>
+                  <td>Poziom 1</td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td>Unia</td>
+                  <td>Książę</td>
+                  <td><span style="color: #fbbf24; font-weight: 700;">+32 działki</span></td>
+                  <td>+1 outpost</td>
+                  <td>Poziom 1</td>
+                </tr>
+                <tr>
+                  <td><strong>5</strong></td>
+                  <td>Królestwo</td>
+                  <td>Król</td>
+                  <td><span style="color: #38bdf8; font-weight: 700;">+64 działki</span></td>
+                  <td>+2 outposty</td>
+                  <td>Poziom 2</td>
+                </tr>
+                <tr>
+                  <td><strong>10+</strong></td>
+                  <td>Imperium</td>
+                  <td>Cesarz</td>
+                  <td><span style="color: #34d399; font-weight: 700;">+128 działek</span></td>
+                  <td>+3 outposty</td>
+                  <td>Poziom 3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 5: DUNGEONY & BOSSOWIE (DUNGEONS & BOSSES)
+           ============================================================ -->
+      <section id="dungeony" class="wiki-section" data-searchable="dungeony bossowie rajdy krysztalowa jaskinia aot atlantyda posejdon zamek rycerz oblezenia">
+        <div class="section-header">
+          <span class="section-tag">Wyprawy RPG & Rajdy</span>
+          <h2 class="section-title">🐲 Dungeony & Legendarni Bossowie</h2>
+          <p class="section-desc">
+            Serwer oferuje zaawansowane dungeony z autorskimi umiejętnościami bossów,
+            paskami zdrowia BossBar, mechanikami zręcznościowymi oraz unikalnymi łupami.
+          </p>
+        </div>
+
+        <!-- DUNGEON 1: KRYSZTAŁOWA JASKINIA (AOT / RODZINA REISS) -->
+        <div id="dungeon-krysztal" class="boss-card titan" data-searchable="krysztalowa jaskinia aot tytan reiss krolewski tytan szermierz strzelec korpusu straznik zaklinacz">
+          <div class="boss-header">
+            <div class="boss-title-wrap">
+              <span class="card-badge badge-gold">Dungeon 1 • Motyw Attack on Titan</span>
+              <h3>💎 Kryształowa Jaskinia Ołtarza Reissów</h3>
+              <div class="boss-subtitle">Podziemny kompleks kryształowych jaskiń strzeżonych przez Korpus Wewnętrzny i Tytana Pierwotnego.</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dark); font-weight: 800;">Trudność</div>
+              <div style="color: #f59e0b; font-weight: 900; font-size: 1.1rem;">★★★★☆ ZAAWANSOWANA</div>
+            </div>
+          </div>
+
+          <!-- Boss info -->
+          <div class="boss-health-bar-container">
+            <div class="boss-health-info">
+              <span>BOSS GŁÓWNY: <strong>Królewski Tytan Przysięgi</strong> (Giant)</span>
+              <span style="color: #f59e0b;">340 HP • Pancerz z Lodu</span>
+            </div>
+            <div class="boss-bar-track">
+              <div class="boss-bar-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <strong style="font-size: 0.95rem; color: #fff;">Przeciwnicy w Dungeonie:</strong>
+          </div>
+
+          <div class="grid-3" style="margin-bottom: 1.5rem;">
+            <div class="ability-pill">
+              <div class="ability-name">🗡️ Kryształowy Szermierz</div>
+              <div class="ability-desc">Dwa miecze, Kryształowy Zryw z obrotem 360°, Lodowe Ostrze zamrażające ekran gracza.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">🏹 Strzelec Korpusu</div>
+              <div class="ability-desc">Manewr przestrzenny 3D (ODM Gear) z linkami, rakiety wybuchowe i bomby dymne przy zwarciu.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">⛓️ Strażnik Ołtarza</div>
+              <div class="ability-desc">Wielki Wither Skeleton z toporem netherytowym, przyciągający uciekających graczy łańcuchem.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">🔮 Zaklinacz Wiecznego Lodu</div>
+              <div class="ability-desc">Pociski pryzmatyczne, kryształowa klatka unieruchamiająca gracza i leczenie sojuszników.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">🦍 Czysty Tytan (165 HP)</div>
+              <div class="ability-desc">Tytaniczne tupnięcie sejsmiczne, Chwyt Ludojada (podnosi gracza i pożera) oraz buchająca para.</div>
+            </div>
+          </div>
+
+          <!-- Umiejętności Bossa -->
+          <div style="background: rgba(0,0,0,0.4); padding: 1.25rem; border-radius: 14px; border: 1px solid var(--border-glass);">
+            <div style="font-weight: 800; font-size: 1rem; color: #fbbf24; margin-bottom: 0.75rem;">Fazy i Umiejętności Królewskiego Tytana:</div>
+            <div class="boss-abilities-grid">
+              <div>• <strong>Utwardzenie Kryształu:</strong> Chwilowa nietykalność i wybuch lodowych odłamków wokół.</div>
+              <div>• <strong>Erupcja Kolców:</strong> Wybuch zabójczych kolców spod ziemi pod wszystkimi graczami na arenie.</div>
+              <div>• <strong>Buchnięcie Pary Kolosa:</strong> Odrzuca wszystkich graczy na odległość kilkunastu metrów.</div>
+              <div>• <strong>Ryk Koordynatu (&lt;50% HP):</strong> Oślepia graczy i przywołuje zastęp strażników ołtarza!</div>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.88rem; color: #34d399;">
+              🎁 <strong>Główny Łup:</strong> Złote Jabłko Kox (Enchanted Golden Apple), Sztaba Netherytu, 5x Diament, 350 EXP.
+            </div>
+          </div>
+        </div>
+
+        <!-- DUNGEON 2: ZATOPIONA ATLANTYDA -->
+        <div id="dungeon-atlantyda" class="boss-card poseidon" style="margin-top: 2rem;" data-searchable="atlantyda posejdon lewiatan harpunnik truciciel zywiołak kolos warden macki krakena">
+          <div class="boss-header">
+            <div class="boss-title-wrap">
+              <span class="card-badge badge-blue">Dungeon 2 • Starożytne Głębiny</span>
+              <h3>🌊 Zatopiona Katedra Atlantydy</h3>
+              <div class="boss-subtitle">Zalane ruiny podwodnego miasta strzeżone przez pradawne konstrukty i samego Posejdona.</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-dark); font-weight: 800;">Trudność</div>
+              <div style="color: #38bdf8; font-weight: 900; font-size: 1.1rem;">★★★★★ EKSTREMALNA</div>
+            </div>
+          </div>
+
+          <!-- Boss info -->
+          <div class="boss-health-bar-container">
+            <div class="boss-health-info">
+              <span>BOSS GŁÓWNY: <strong>Władca Otchłani Posejdon</strong> (Warden)</span>
+              <span style="color: #38bdf8;">380 HP • BossBar 12 Segmentów</span>
+            </div>
+            <div class="boss-bar-track">
+              <div class="boss-bar-fill blue" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-bottom: 1.5rem;">
+            <div class="ability-pill">
+              <div class="ability-name">🔱 Harpunnik Głębin</div>
+              <div class="ability-desc">Drowned z trójzębem, ślizgający się na fali przypływu i tworzący wiry wodne z gejzerem.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">🧪 Koralowy Truciciel (Bogged)</div>
+              <div class="ability-desc">Zamyka gracza w bąblu wodnym, który odbiera tlen i dusi, a przy uderzeniu pryska kwasem.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">🌪️ Żywiołak Sztormu (Breeze)</div>
+              <div class="ability-desc">Tworzy Oko Cyklonu zasysające w powietrze i uderzające piorunem w uwięzionych graczy.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">⚙️ Konstrukt Pryzmarynowy</div>
+              <div class="ability-desc">Bomba głębinowa z dźwiękiem sonaru i impuls hydromagnetyczny odrzucający od murów.</div>
+            </div>
+
+            <div class="ability-pill">
+              <div class="ability-name">⚓ Kolos Kuźni (150 HP)</div>
+              <div class="ability-desc">Podwodny golem żelazny wywołujący erupcje gejzerów wrzącej magmy i potężne uderzenie kotwicą.</div>
+            </div>
+          </div>
+
+          <!-- Umiejętności Posejdona -->
+          <div style="background: rgba(0,0,0,0.4); padding: 1.25rem; border-radius: 14px; border: 1px solid var(--border-glass);">
+            <div style="font-weight: 800; font-size: 1rem; color: #38bdf8; margin-bottom: 0.75rem;">Fazy i Umiejętności Władcy Otchłani:</div>
+            <div class="boss-abilities-grid">
+              <div>• <strong>Macki Krakena:</strong> Chwyta graczy strumieniem czarnego atramentu, unosi i ciska o posadzkę.</div>
+              <div>• <strong>Wielki Maelstrom:</strong> Gigantyczny wir wodny na arenie ściągający wszystkich do paszczy Wardena.</div>
+              <div>• <strong>Gniew Trójzębu:</strong> Seria wyładowań elektrycznych i uderzeń pioruna z ciśnieniem hydrostatycznym.</div>
+              <div>• <strong>Zew Głębin (&lt;50% HP):</strong> Wodna bariera ochronna oraz przyzwanie elity strażników Atlantydy.</div>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.88rem; color: #38bdf8;">
+              🎁 <strong>Główny Łup:</strong> Serce Morza (Heart of the Sea - 100%), Trójząb, Złote Jabłko Kox, 6x Diament, 450 EXP.
+            </div>
+          </div>
+        </div>
+
+        <!-- DUNGEON 3 & EVENT OBLĘŻENIA -->
+        <div class="grid-2" style="margin-top: 2rem;">
+          <!-- Zamek Bastionu -->
+          <div id="dungeon-zamek" class="content-card glow-red">
+            <span class="card-badge badge-red">Dungeon 3</span>
+            <h3 class="card-title">🏰 Bastion Umarłych (Zamek)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Średniowieczna twierdza opanowana przez nieumarłe wojska zamkowe:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><strong>Martwy Szermierz:</strong> Zwinny szkielet z cięciem z wyskoku</li>
+              <li><strong>Gwardzista Skarbca:</strong> Opancerzony zombie z tarczą i odepchnięciem</li>
+              <li><strong>Królewski Kat:</strong> Zombified Piglin zadający krwawienie ignorujące pancerz</li>
+              <li><strong>Nadworny Nekromanta:</strong> Rzuca pociski klątwy i leczy sojusznicze moby</li>
+              <li><strong>Kusznik Bastionu:</strong> Strzelec odskakujący z granatem odpychającym</li>
+            </ul>
+          </div>
+
+          <!-- Rycerz Oblężenia -->
+          <div class="content-card glow-gold">
+            <span class="card-badge badge-gold">Boss Eventowy</span>
+            <h3 class="card-title">🛡️ Rycerz Oblężenia (600 HP)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Potężny boss przywoływany podczas eventów najazdu na miasta:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><strong>Wyposażenie:</strong> Pełny netheryt, Topór Oblężniczy Sharpness V</li>
+              <li><strong>Uderzenie Kowadła:</strong> Fala uderzeniowa zadająca 12 pkt dmg ignorujące zbroję</li>
+              <li><strong>Saperzy Oblężenia:</strong> Przywołuje zombie podkładających ładunki wybuchowe</li>
+              <li><strong>Łup wojenny:</strong> <span style="color: #fbbf24; font-weight: 700;">$2500 - $4000 do banku</span>, Klinga Oblężenia, szablon Netherite Upgrade, Totem Nieśmiertelności!</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 6: CUSTOM PRZEDMIOTY (CUSTOM ITEMS & ARSENAL)
+           ============================================================ -->
+      <section id="przedmioty" class="wiki-section" data-searchable="przedmioty custom oraxen rozdzka blink hak lowcy klatwa pojedynku buty cienia totem tarczy zegar talizman kocioł plytka amulet duszy">
+        <div class="section-header">
+          <span class="section-tag">Magiczny Ekwipunek</span>
+          <h2 class="section-title">✨ Custom Przedmioty & Magiczne Artefakty</h2>
+          <p class="section-desc">
+            Przedmioty stworzone w oparciu o silnik <strong>Oraxen</strong> oraz autorską logikę w <strong>McServCore</strong>.
+            Każdy przedmiot posiada unikalne tekstury, animacje i mechaniki bojowe.
+          </p>
+        </div>
+
+        <!-- Pasek filtrów -->
+        <div class="filter-bar">
+          <button class="filter-btn active" data-category="all">Wszystkie</button>
+          <button class="filter-btn" data-category="weapon">Magiczne Bronie</button>
+          <button class="filter-btn" data-category="tnt">Wojenne TNT</button>
+          <button class="filter-btn" data-category="rpg">Relikty & RPG</button>
+          <button class="filter-btn" data-category="mat">Składniki Dark Fantasy</button>
+        </div>
+
+        <!-- Siatka przedmiotów -->
+        <div class="grid-3">
+
+          <!-- Różdżka Mignięcia -->
+          <div class="item-card legendary" data-item-category="weapon" data-searchable="rozdzka migniecia blink wand dash teleportacja">
+            <span class="card-badge badge-gold">Legendarny</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/blink_wand.png" alt="Różdżka Mignięcia" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-purple);">Różdżka Mignięcia</div>
+            <div class="item-subtext">ID: blink_wand • Prawy Klik</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">CD: 0s</span>
+              <span class="item-tag" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">Koszt: 2 serca</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-light-purple mc-bold">Magia Przestrzeni</div>
+              <div class="mc-gray">Błyskawicznie przenosi gracza do <span class="mc-white">15 bloków</span> w stronę celownika.</div>
+              <div class="mc-yellow">• Posiada anty-glitch raycast (blokada w ścianach)</div>
+              <div class="mc-red">• Zablokowana na wrogich terenach Towny</div>
+            </div>
+          </div>
+
+          <!-- Różdżka Legionu -->
+          <div class="item-card legendary" data-item-category="weapon" data-searchable="rozdzka legionu legion wand szkielety kon">
+            <span class="card-badge badge-gold">Legendarny</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/rozdzka_legionu.png" alt="Różdżka Legionu" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-red);">Różdżka Legionu</div>
+            <div class="item-subtext">ID: rozdzka_legionu • Prawy Klik</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">CD: 2 min</span>
+              <span class="item-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">Czas: 30s</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-dark-red mc-bold">Armia Umarłych</div>
+              <div class="mc-gray">Przywołuje <span class="mc-white">5 łuczników</span> z Punch I, <span class="mc-white">5 rycerzy</span> oraz <span class="mc-yellow">konia szkieletu o podwójnej prędkości (0.4)</span>. Nie atakują właściciela.</div>
+            </div>
+          </div>
+
+          <!-- Różdżka Szkieletów -->
+          <div class="item-card epic" data-item-category="weapon" data-searchable="rozdzka szkieletow skeleton wand lucznicy">
+            <span class="card-badge badge-purple">Epicki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/rozdzka_szkieletow.png" alt="Różdżka Szkieletów" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-gold);">Różdżka Szkieletów</div>
+            <div class="item-subtext">ID: rozdzka_szkieletow • Prawy Klik</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">CD: 5 min</span>
+              <span class="item-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">Czas: 20s</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-gold mc-bold">Wsparcie Łuczników</div>
+              <div class="mc-gray">Przywołuje <span class="mc-white">5 szkieletów</span> z łukami Punch I na 20 sekund. Chronią właściciela przed wrogami.</div>
+            </div>
+          </div>
+
+          <!-- Buty Cienia -->
+          <div class="item-card epic" data-item-category="weapon" data-searchable="buty cienia shadow boots niewidzialnosc kucanie">
+            <span class="card-badge badge-purple">Epicki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/buty_cienia.png" alt="Buty Cienia" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-purple);">Buty Cienia</div>
+            <div class="item-subtext">ID: buty_cienia • Zbroja</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(192, 132, 252, 0.2); color: #c084fc;">Pasywka</span>
+              <span class="item-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">Diamentowa Zbroja</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-dark-purple mc-bold">Kamuflaż Cienia</div>
+              <div class="mc-gray">Kucnij i stój w miejscu przez <span class="mc-white">30 s</span>, aby stać się <span class="mc-white">całkowicie niewidzialnym</span>. Ruch przerywa efekt. Otrzymanie obrażeń ogłusza na 5s!</div>
+            </div>
+          </div>
+
+          <!-- Totem Tarczy -->
+          <div class="item-card rare" data-item-category="weapon" data-searchable="totem tarczy shield totem blokada tarcz">
+            <span class="card-badge badge-blue">Rzadki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/totem_tarczy.png" alt="Totem Tarczy" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-blue);">Totem Tarczy</div>
+            <div class="item-subtext">ID: totem_tarczy • Prawy Klik</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">CD: 2 min</span>
+              <span class="item-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">Promień: 30 bloków</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-aqua mc-bold">Rozbicie Obrony</div>
+              <div class="mc-gray">Nakłada <span class="mc-white">10 sekund cooldownu</span> na tarcze wszystkich graczy w promieniu <span class="mc-white">30 bloków</span>. Natychmiast opuszcza uniesione tarcze.</div>
+            </div>
+          </div>
+
+          <!-- Zegar Cofnięcia -->
+          <div class="item-card epic" data-item-category="weapon" data-searchable="zegar cofniecia rewind clock powrot hp speed">
+            <span class="card-badge badge-purple">Epicki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/zegar_cofniecia.png" alt="Zegar Cofnięcia" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-purple);">Zegar Cofnięcia</div>
+            <div class="item-subtext">ID: zegar_cofniecia • Prawy Klik</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">CD: 5 min</span>
+              <span class="item-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Cofnięcie: 10s</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-light-purple mc-bold">Zagięcie Czasu</div>
+              <div class="mc-gray">Zapisuje pozycję i stan zdrowia, dając <span class="mc-white">Speed III</span> na 10s. Po upływie czasu teleportuje z powrotem i przywraca zachowane HP!</div>
+            </div>
+          </div>
+
+          <!-- Klątwa Pojedynku -->
+          <div class="item-card legendary" data-item-category="weapon" data-searchable="klatwa pojedynku duel curse walka skrzynia lupu">
+            <span class="card-badge badge-gold">Legendarny</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/klatwa_pojedynku.png" alt="Klątwa Pojedynku" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-red);">Klątwa Pojedynku</div>
+            <div class="item-subtext">ID: klatwa_pojedynku • Uderzenie</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">Jednorazowy</span>
+              <span class="item-tag" style="background: rgba(192, 132, 252, 0.2); color: #c084fc;">Pojedynek 30m</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-dark-red mc-bold">Klątwa na Śmierć i Życie</div>
+              <div class="mc-gray">Uderz wroga, by zamknąć was w 30-minutowym pojedynku. Zwycięzca odbiera cały ekwipunek rywala w <span class="mc-yellow">Skrzyni Łupu</span>! Jeśli nikt nie polegnie — giną obaj!</div>
+            </div>
+          </div>
+
+          <!-- Hak Łowcy -->
+          <div class="item-card rare" data-item-category="weapon" data-searchable="hak lowcy hunter hook przyciaganie no jump">
+            <span class="card-badge badge-blue">Rzadki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/hak_lowcy.png" alt="Hak Łowcy" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-blue);">Hak Łowcy</div>
+            <div class="item-subtext">ID: hak_lowcy • Prawy Klik</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">CD: 15s</span>
+              <span class="item-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">Zasięg: 16 bloków</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-aqua mc-bold">Schwytanie Zwierzyny</div>
+              <div class="mc-gray">Wystrzeliwuje hak po linii celownika. Trafiony gracz zostaje natychmiast przyciągnięty pod Twoje nogi i traci możliwość skoku na 2s!</div>
+            </div>
+          </div>
+
+          <!-- Talizman Górnika -->
+          <div class="item-card epic" data-item-category="weapon" data-searchable="talizman gornika haste talisman kopanie pospiech speed">
+            <span class="card-badge badge-purple">Epicki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/haste_talisman.png" alt="Talizman Górnika" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-gold);">Talizman Górnika</div>
+            <div class="item-subtext">ID: haste_talisman • Lewa Ręka [F]</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">Off-hand Booster</span>
+              <span class="item-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Do Haste II + Speed</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-gold mc-bold">Pasywny Booster Wydobycia</div>
+              <div class="mc-gray">Trzymaj w off-handzie. Kopiąc kamień w odstępach &lt;2.5s nabijasz ładunki:</div>
+              <div class="mc-yellow">• 3 ładunki: Haste I</div>
+              <div class="mc-yellow">• 7 ładunków: Haste II</div>
+              <div class="mc-green">• 10 ładunków: Haste II + Speed I + Night Vision!</div>
+            </div>
+          </div>
+
+          <!-- Kocioł Uzdrowienia -->
+          <div class="item-card epic" data-item-category="weapon" data-searchable="kociol uzdrowienia healing cauldron leczenie regen oczyszczenie">
+            <span class="card-badge badge-purple">Epicki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/kociol_uzdrowienia.png" alt="Kocioł Uzdrowienia" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-emerald);">Kocioł Uzdrowienia</div>
+            <div class="item-subtext">ID: kociol_uzdrowienia • Postawienie</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">CD: 5 min</span>
+              <span class="item-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Promień: 8 bloków</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-green mc-bold">Święte Oczyszczenie</div>
+              <div class="mc-gray">Stawia kocioł na 60s. Usuwa wszelkie negatywne efekty (trucizny, wither, ciemność, spowolnienia) i nadaje <span class="mc-white">Regenerację II</span>. Ma 1 HP.</div>
+            </div>
+          </div>
+
+          <!-- Płytka Lewitacji -->
+          <div class="item-card rare" data-item-category="weapon" data-searchable="plytka lewitacji levitation plate pulapka">
+            <span class="card-badge badge-blue">Rzadki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/plytka_lewitacji.png" alt="Płytka Lewitacji" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-purple);">Płytka Lewitacji</div>
+            <div class="item-subtext">ID: plytka_lewitacji • Postawienie</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(192, 132, 252, 0.2); color: #c084fc;">Pułapka</span>
+              <span class="item-tag" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">4 DMG</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-light-purple mc-bold">Grawitacyjna Zapadnia</div>
+              <div class="mc-gray">Zadaje 4 pkt obrażeń i wyrzuca każdego intruza w powietrze z efektem <span class="mc-white">Lewitacji II na 2 sekundy</span>. Trwała na restarty.</div>
+            </div>
+          </div>
+
+          <!-- Amulet Dusz -->
+          <div class="item-card epic" data-item-category="rpg" data-searchable="amulet dusz soulbound ochrona przed utrata po smierci">
+            <span class="card-badge badge-purple">Epicki</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/amulet_duszy.png" alt="Amulet Dusz" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-gold);">Amulet Dusz</div>
+            <div class="item-subtext">ID: amulet_duszy • Relikt</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">Soulbound</span>
+              <span class="item-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">Niezbywalny</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-gold mc-bold">Pakt Nieśmiertelnej Duszy</div>
+              <div class="mc-gray">Pradawny relikt chroniący przed karą śmierci DeathPenalty. <span class="mc-white">NIGDY nie wypada z ekwipunku po śmierci</span>, zawsze pozostając z Tobą.</div>
+            </div>
+          </div>
+
+          <!-- Klinga Oblężenia -->
+          <div class="item-card legendary" data-item-category="rpg" data-searchable="klinga oblezenia netherite miecz sharpness">
+            <span class="card-badge badge-gold">Legendarny</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/klinga_oblezenia.png" alt="Klinga Oblężenia" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-red);">Klinga Oblężenia</div>
+            <div class="item-subtext">ID: klinga_oblezenia • Miecz</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">Netherite</span>
+              <span class="item-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">Sharpness V</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-dark-red mc-bold">Ostrze Płonącej Twierdzy</div>
+              <div class="mc-gray">Wykuta w kuźni Rycerza Oblężenia.</div>
+              <div class="mc-yellow">• Ostrość V, Zaklęty Ogień II</div>
+              <div class="mc-yellow">• Niezniszczalność III, Grabież III</div>
+            </div>
+          </div>
+
+          <!-- Banknot Pieniężny -->
+          <div class="item-card rare" data-item-category="rpg" data-searchable="banknot pieniezny gotowka withdraw pay">
+            <span class="card-badge badge-green">Waluta</span>
+            <div class="item-icon-wrapper">
+              <img src="assets/mcserv/banknote.png" alt="Banknot Pieniężny" class="item-img">
+            </div>
+            <div class="item-name" style="color: var(--accent-emerald);">Banknot Pieniężny</div>
+            <div class="item-subtext">ID: banknote • Fizyczna Gotówka</div>
+            <div class="item-tags">
+              <span class="item-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Handel</span>
+              <span class="item-tag" style="background: rgba(255, 255, 255, 0.1); color: #fff;">PPM: Wpłata</span>
+            </div>
+            <div class="mc-tooltip">
+              <div class="mc-green mc-bold">Fizyczny Czek Finansowy</div>
+              <div class="mc-gray">Wypłacany komendą <span class="mc-white">/withdraw &lt;kwota&gt;</span>. Kliknij PPM trzymając w ręku, aby natychmiast wpłacić wartość do swojego konta bankowego!</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Surowce Dark Fantasy w pigułce -->
+        <div style="margin-top: 3rem;" data-item-category="mat">
+          <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.6rem;">🧪 Kluczowe Komponenty Dark Fantasy</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.25rem;">
+            Rzadkie trofea i komponenty rzemieślnicze wypadające z potworów mrocznego świata:
+          </p>
+
+          <div class="grid-4">
+            <div class="content-card" style="padding: 1rem; text-align: center;">
+              <img src="assets/items/shadow_dust.png" alt="Pył Cienia" style="width: 38px; height: 38px; image-rendering: pixelated; margin-bottom: 0.5rem;">
+              <div style="font-weight: 800; font-size: 0.95rem;">Pył Cienia</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Drop ze Zjawy Zmierzchu</div>
+            </div>
+
+            <div class="content-card" style="padding: 1rem; text-align: center;">
+              <img src="assets/items/void_shard.png" alt="Odłamek Pustki" style="width: 38px; height: 38px; image-rendering: pixelated; margin-bottom: 0.5rem;">
+              <div style="font-weight: 800; font-size: 0.95rem;">Odłamek Pustki</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Drop z Węża Pustki</div>
+            </div>
+
+            <div class="content-card" style="padding: 1rem; text-align: center;">
+              <img src="assets/items/dark_ingot.png" alt="Sztaba Mroku" style="width: 38px; height: 38px; image-rendering: pixelated; margin-bottom: 0.5rem;">
+              <div style="font-weight: 800; font-size: 0.95rem;">Sztaba Mroku</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Drop z Przeklętego Rycerza</div>
+            </div>
+
+            <div class="content-card" style="padding: 1rem; text-align: center;">
+              <img src="assets/items/dragon_scale.png" alt="Łuska Smoka" style="width: 38px; height: 38px; image-rendering: pixelated; margin-bottom: 0.5rem;">
+              <div style="font-weight: 800; font-size: 0.95rem;">Łuska Smoka</div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);">Drop z Krwawego Kła</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 7: GOSPODARKA & MECHANIKI (ECONOMY & RULES)
+           ============================================================ -->
+      <section id="mechaniki" class="wiki-section" data-searchable="gospodarka ekonomia playtime nagrody smierc deathpenalty spawnery ulepszenia bluemap">
+        <div class="section-header">
+          <span class="section-tag">Zasady Świata</span>
+          <h2 class="section-title">⚙️ Gospodarka & Pozostałe Mechaniki</h2>
+          <p class="section-desc">
+            Poznaj system finansowy serwera, działanie ulepszalnych spawnerów, karę za śmierć
+            oraz mapę trójwymiarową dostępną w przeglądarce.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <!-- Playtime Rewards -->
+          <div class="content-card glow-gold">
+            <span class="card-badge badge-gold">Zarobki Czasowe</span>
+            <h3 class="card-title">💵 Wynagrodzenie za Grę (Playtime)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Na serwerze zarabiasz za sam czas poświęcony na rozgrywkę:
+            </p>
+            <div class="alert-box alert-gold">
+              <span class="alert-icon">💰</span>
+              <div>
+                <strong>50$ co 15 minut aktywnej gry.</strong><br>
+                Maksymalny dzienny limit: <strong>200$ dziennie</strong> (1 godzina gry). Limit resetuje się każdej nocy o północy!
+              </div>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">
+              Stan konta sprawdzisz komendą <code>/balance</code>, a ranking najbogatszych przez <code>/baltop</code>.
+            </p>
+          </div>
+
+          <!-- DeathPenalty -->
+          <div class="content-card glow-red">
+            <span class="card-badge badge-red">Wysoka Stawka</span>
+            <h3 class="card-title">💀 Kara za Śmierć (DeathPenalty)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Śmierć na serwerze to realna strata, która zmusza do ostrożności:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><strong>Utrata 50% przedmiotów:</strong> Połowa losowych slotów ekwipunku, pancerza i ręki pomocniczej wypada na ziemię!</li>
+              <li><strong>Utrata 50% salda gotówki:</strong> Tracisz połowę pieniędzy ze swojego konta Vault.</li>
+              <li><strong>Ochrona:</strong> Przedmioty z tagiem <em>Soulbound</em> oraz <strong>Amulet Dusz</strong> (<code>amulet_duszy</code>) nigdy nie przepadają!</li>
+            </ul>
+          </div>
+
+          <!-- Upgradeable Spawners -->
+          <div class="content-card glow-blue">
+            <span class="card-badge badge-blue">Automatyzacja</span>
+            <h3 class="card-title">📦 Ulepszalne Spawnery (Stacking)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Możesz łączyć i rozwijać spawnery potworów:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><strong>Łączenie w stosy (Stacking):</strong> Do <strong>16 spawnerów</strong> w jednym bloku!</li>
+              <li><strong>Poziomy ulepszeń (I, II, III...):</strong> Zwiększają liczbę generowanych mobów i skracają czas odnowienia.</li>
+              <li><strong>Współpraca z lejami:</strong> Bezpośrednie podłączenie do skrzyń magazynowych bez lagowania serwera.</li>
+            </ul>
+          </div>
+
+          <!-- Domy i Teleportacja -->
+          <div class="content-card glow-purple">
+            <span class="card-badge badge-purple">Podróż</span>
+            <h3 class="card-title">🌌 Domy i Teleportacja</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Każdy gracz posiada dostęp do bezpiecznych teleportów:
+            </p>
+            <ul style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;">
+              <li><strong>Do 3 prywatnych domów:</strong> <code>/sethome &lt;nazwa&gt;</code>, <code>/home &lt;nazwa&gt;</code></li>
+              <li><strong>Teleportacja do graczy:</strong> <code>/tpa &lt;gracz&gt;</code>, <code>/tpaccept</code></li>
+              <li><strong>Warmup 5 sekund:</strong> Teleportacja wymaga stania w miejscu bez ruszania się i otrzymywania ciosów!</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 8: KOMPENDIUM KOMEND (COMMAND DIRECTORY)
+           ============================================================ -->
+      <section id="komendy" class="wiki-section" data-searchable="komendy lista komend towny nacja domy tpa pay balance spawn pvp">
+        <div class="section-header">
+          <span class="section-tag">Skrót Komend</span>
+          <h2 class="section-title">📜 Kompendium Komend Serwera</h2>
+          <p class="section-desc">
+            Kliknij przycisk „Kopiuj” obok dowolnej komendy, aby błyskawicznie wkleić ją w grze.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <!-- Gracz & Teleportacja -->
+          <div class="content-card">
+            <h3 class="card-title" style="color: var(--accent-gold);">👤 Gracz & Teleportacja</h3>
+            
+            <div class="command-row">
+              <div>
+                <span class="command-text">/spawn</span>
+                <span class="command-desc">Teleport na spawn główny (5s)</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/spawn">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/sethome [nazwa]</span>
+                <span class="command-desc">Ustawia punkt domu (max 3)</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/sethome">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/home [nazwa]</span>
+                <span class="command-desc">Teleportuje do Twojego domu</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/home">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/tpa &lt;gracz&gt;</span>
+                <span class="command-desc">Wysyła prośbę o teleportację</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/tpa ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/tpaccept</span>
+                <span class="command-desc">Akceptuje prośbę o teleport</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/tpaccept">Kopiuj</button>
+            </div>
+          </div>
+
+          <!-- Finanse & Handel -->
+          <div class="content-card">
+            <h3 class="card-title" style="color: var(--accent-emerald);">💰 Finanse & Handel</h3>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/balance</span>
+                <span class="command-desc">Sprawdza stan Twojego konta</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/balance">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/pay &lt;gracz&gt; &lt;kwota&gt;</span>
+                <span class="command-desc">Przelewa pieniądze graczowi</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/pay ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/withdraw &lt;kwota&gt;</span>
+                <span class="command-desc">Wypłaca fizyczny Banknot Pieniężny</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/withdraw ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/baltop</span>
+                <span class="command-desc">Ranking 10 najbogatszych graczy</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/baltop">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/pvp</span>
+                <span class="command-desc">Sprawdza aktualny status okna walki</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/pvp">Kopiuj</button>
+            </div>
+          </div>
+
+          <!-- Miasto (Towny) -->
+          <div class="content-card">
+            <h3 class="card-title" style="color: var(--accent-blue);">🏰 Miasto (Towny)</h3>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/t new &lt;nazwa&gt;</span>
+                <span class="command-desc">Zakłada nowe miasto ($50)</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/t new ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/t claim</span>
+                <span class="command-desc">Zajmuje chunk dla miasta ($15+)</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/t claim">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/t takeoverclaim</span>
+                <span class="command-desc">Przejmuje wrogą działkę podczas wojny</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/t takeoverclaim">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/t deposit &lt;kwota&gt;</span>
+                <span class="command-desc">Wpłaca pieniądze do banku miasta</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/t deposit ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/t spawn</span>
+                <span class="command-desc">Teleportuje na rynek Twojego miasta</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/t spawn">Kopiuj</button>
+            </div>
+          </div>
+
+          <!-- Nacja (Nations) -->
+          <div class="content-card">
+            <h3 class="card-title" style="color: var(--accent-purple);">👑 Państwa (Nations)</h3>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/n new &lt;nazwa&gt;</span>
+                <span class="command-desc">Tworzy nowe Państwo ($1000)</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/n new ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/n add &lt;miasto&gt;</span>
+                <span class="command-desc">Zaprasza miasto do nacji</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/n add ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/n enemy add &lt;nacja&gt;</span>
+                <span class="command-desc">Ogłasza stan wojny z inną nacją</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/n enemy add ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/n ally add &lt;nacja&gt;</span>
+                <span class="command-desc">Zawiera sojusz militarny</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/n ally add ">Kopiuj</button>
+            </div>
+
+            <div class="command-row">
+              <div>
+                <span class="command-text">/n spawn</span>
+                <span class="command-desc">Teleport do stolicy państwa</span>
+              </div>
+              <button class="btn-copy-cmd" data-cmd="/n spawn">Kopiuj</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SEKCJA 9: KODEKS PRAWNY I REGULAMIN SERWERA
+           ============================================================ -->
+      <section id="regulamin" class="wiki-section" data-searchable="regulamin kodeks prawny sad serwerowy sad wojenny jurysdykcja multikonta schrony pvp lava casty crystal pvp eurazja insiding fake sieges kaucje zbrodnia wojenna x-ray killaura baritone">
+        <div class="section-header">
+          <span class="section-tag" style="color: #fbbf24;">Wymiar Sprawiedliwości & Prawo</span>
+          <h2 class="section-title">⚖️ KODEKS PRAWNY I REGULAMIN SERWERA</h2>
+          <p class="section-desc">
+            Oficjalny porządek prawny obowiązujący wszystkich mieszkańców, burmistrzów i władców państw na serwerze <strong>HTALE.ONLINE</strong>.
+            Funkcjonuje u nas dwuinstancyjny wymiar sprawiedliwości oparty na procesach sądowych, pracach społecznych i konfiskacie majątku.
+          </p>
+        </div>
+
+        <!-- Pasek filtrowania rozdziałów -->
+        <div class="filter-bar" style="margin-bottom: 2.2rem;">
+          <button class="filter-btn law-filter-btn active" data-law-chapter="all">Wszystkie Rozdziały (I–V)</button>
+          <button class="filter-btn law-filter-btn" data-law-chapter="ch1">I: Sądownictwo & Ogólne</button>
+          <button class="filter-btn law-filter-btn" data-law-chapter="ch2">II: Urbanistyka & Architektura</button>
+          <button class="filter-btn law-filter-btn" data-law-chapter="ch3">III: Eurazja & Nowi Gracze</button>
+          <button class="filter-btn law-filter-btn" data-law-chapter="ch4">IV: Kodeks Wojenny</button>
+          <button class="filter-btn law-filter-btn" data-law-chapter="ch5">V: Porządek Społeczny & Więzienia</button>
+        </div>
+
+        <!-- ==========================================
+             ROZDZIAŁ I: SYSTEM SĄDOWNICTWA I ZASADY OGÓLNE
+             ========================================== -->
+        <div class="law-chapter-block" data-chapter-id="ch1">
+          <div class="law-chapter-banner">
+            <div class="law-chapter-info">
+              <h3>⚖️ Rozdział I: System Sądownictwa i Zasady Ogólne</h3>
+              <p>Struktura instancyjna wymiaru sprawiedliwości, procedury orzekania, ochrona integralności kodu i zakaz multikont.</p>
+            </div>
+            <div class="law-roman-badge">ROZDZIAŁ I</div>
+          </div>
+
+          <!-- Art. 1 -->
+          <div class="law-card court" data-searchable="art 1 jurysdykcja hierarchia kar sad serwerowy sad wojenny banicja wieczne wygnanie">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 1</span>
+                <span>Jurysdykcja i hierarchia kar</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Sąd Serwerowy</span>
+                <span class="law-badge-war-court">Sąd Wojenny</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Na serwerze funkcjonuje <strong>dwuinstancyjny wymiar sprawiedliwości</strong>:</p>
+              <ul>
+                <li><strong>Sąd Serwerowy:</strong> Rozpatruje wykroczenia cywilne, gospodarcze oraz łamanie podstawowych reguł współżycia społecznego. Stosuje kary finansowe, prace społeczne, areszt oraz konfiskatę mienia zamiast bezrefleksyjnych banów.</li>
+                <li><strong>Sąd Wojenny:</strong> Rozpatruje zbrodnie militarne, zdrady stanu i naruszenia traktatów pokojowych. Dysponuje zaostrzonym wymiarem kar, w tym karą <strong class="law-highlight">Wiecznego Wygnania</strong> (permanentny zakaz tworzenia miast/nacji oraz dołączania do nich).</li>
+              </ul>
+              <div class="law-sanction-box court-box">
+                <span>⚠️</span>
+                <div><strong>Wyjątek permanentnego bana:</strong> Kara permanentnego bana z pominięciem procedury sądowej stosowana jest wyłącznie w przypadkach masowego exploitowania, niszczenia infrastruktury serwera oraz cheatowania. Wszelkie orzeczenia Sądów opierają się na zasadzie proporcjonalności i dążeniu do sprawiedliwego wyroku.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Art. 2 -->
+          <div class="law-card" data-searchable="art 2 uczciwosc procesowa poszanowanie wyrokow niestawiennictwo preparowanie dowodow podszywanie">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 2</span>
+                <span>Uczciwość procesowa i poszanowanie wyroków</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Procedura Sądowa</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Obowiązek stawiennictwa:</strong> Gracz wezwany przed oblicze Sądu ma obowiązek stawiennictwa w wyznaczonym terminie. Odmowa udziału w procesie skutkuje <strong style="color: var(--accent-red);">natychmiastowym uznaniem winy zaocznie</strong> i nałożeniem maksymalnego wymiaru kary (w tym kary banicji).</p>
+              <p><strong>2. Mataczenie i fałszywe oskarżenia:</strong> Celowe preparowanie dowodów, montowanie materiałów audiowizualnych, wnoszenie fałszywych oskarżeń oraz celowe marnowanie czasu administracji i sędziów podlega karze grzywny lub więzienia.</p>
+              <p><strong>3. Podszywanie się:</strong> Zabrania się podszywania pod członków administracji, sędziów oraz innych graczy poprzez nicki, skórki (skiny) lub wprowadzanie w błąd na czacie.</p>
+            </div>
+          </div>
+
+          <!-- Art. 3 -->
+          <div class="law-card severe" data-searchable="art 3 ochrona kodu gry bledy exploity x-ray killaura fly baritone bug bounty maszyny lagujace">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 3</span>
+                <span>Ochrona kodu gry i błędy serwera</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-war-court">Zabezpieczenia & Anty-Cheat</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Zakaz modyfikacji niedozwolonych:</strong> Całkowity zakaz stosowania oprogramowania ułatwiającego rozgrywkę (m.in. <em>X-Ray, KillAura, Fly, Baritone, FreeCam, Auto-Clicker</em>). Samo posiadanie aktywnych modyfikacji niedozwolonych kwalifikuje do natychmiastowej blokady konta.</p>
+              <p><strong>2. Bezwzględny zakaz exploitów:</strong> Świadome i zatajone wykorzystywanie luk lub błędów serwera (exploitów) skutkuje permanentnym banem.</p>
+              <div class="alert-box alert-gold" style="margin: 0.8rem 0;">
+                <span class="alert-icon">🎁</span>
+                <div><strong>Program Bug Bounty:</strong> Uczciwe zgłoszenie błędu administracji jest nagradzane proporcjonalnie do skali i wagi zagrożenia luki (waluta, unikalne artefakty RPG).</div>
+              </div>
+              <p><strong>3. Maszyny lagujące:</strong> Surowo wzbronione jest tworzenie wszelkich maszyn lagujących, przeciążających pamięć lub sztucznie wymuszających obciążenie ticków serwera (TPS).</p>
+            </div>
+          </div>
+
+          <!-- Art. 4 -->
+          <div class="law-card severe" data-searchable="art 4 multikonta szpiegostwo magazyny podbijanie liczby mieszkancow">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 4</span>
+                <span>Multikonta</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-crime">Zakaz Bezwzględny</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Obowiązuje bezwzględny zakaz posiadania multikont.</p>
+              <div class="law-sanction-box">
+                <span>⛔</span>
+                <div>Używanie dodatkowych profili w celach szpiegowskich, magazynowych lub do <strong>sztucznego zwiększania liczby mieszkańców miast i nacji</strong> (w celu nabijania limitów działek) skutkuje <strong>permanentnym banem wszystkich powiązanych kont bez możliwości odwołania</strong>.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             ROZDZIAŁ II: URBANISTYKA, ARCHITEKTURA I OCHRONA ŚWIATA
+             ========================================== -->
+        <div class="law-chapter-block" data-chapter-id="ch2">
+          <div class="law-chapter-banner nature">
+            <div class="law-chapter-info">
+              <h3>🏛️ Rozdział II: Urbanistyka, Architektura i Ochrona Świata</h3>
+              <p>Standardy estetyczne budowli, zakaz kloców PvP, regulacje dotyczące murów obronnych, fos i blokowania granic.</p>
+            </div>
+            <div class="law-roman-badge">ROZDZIAŁ II</div>
+          </div>
+
+          <!-- Art. 5 -->
+          <div class="law-card" data-searchable="art 5 ochrona dziczy wilderness griefing znieksztalcanie terenu">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 5</span>
+                <span>Ochrona Dziczy (Wilderness)</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Środowisko</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Celowy griefing, zniekształcanie terenu poza granicami miast oraz tworzenie szpecących struktur w dziczy (m.in. wielkich wykopów 1x1, unoszących się w powietrzu platform z bruku czy bezsensownego niszczenia krajobrazu) jest zakazane i karane nakazem rekultywacji terenu lub grzywną.</p>
+            </div>
+          </div>
+
+          <!-- Art. 6 -->
+          <div class="law-card court" data-searchable="art 6 standardy architektoniczne zakaz schronow pvp kloce cuboidy mury">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 6</span>
+                <span>Standardy architektoniczne i zakaz schronów PvP</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Urbanistyka</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Zakaz kloców:</strong> Zabrania się tworzenia działek i budynków nastawionych wyłącznie pod korzyść w PvP (tzw. kloców, bezokiennych bunkrów i ohydnych cuboidów pozbawionych jakichkolwiek walorów estetycznych).</p>
+              <p><strong>2. Architektura obronna:</strong> Dozwolone jest budowanie zamków, twierdz, fortów, wież strażniczych czy okrętów wojennych, o ile reprezentują one <strong>spójny i estetyczny styl architektoniczny</strong> wpisujący się w klimat serwera.</p>
+              <p><strong>3. Nienaturalne mury:</strong> Stawianie wielowarstwowych, litych ścian o nienaturalnej grubości, wzniesionych wyłącznie w celu blokowania wybuchów bez dbałości o wygląd, jest nielegalne i podlega nakazowi rozbiórki.</p>
+            </div>
+          </div>
+
+          <!-- Art. 7 -->
+          <div class="law-card severe" data-searchable="art 7 zakaz materialow przeciwwybuchowych bedrock wzmocniony obsydian">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 7</span>
+                <span>Zakaz materiałów przeciwwybuchowych</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-war-court">Zasady Oblężnicze</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Zabrania się wykorzystywania bloków o skrajnie nienaturalnej odporności na eksplozje (np. <em>bedrock, wzmocniony obsydian</em>) w strukturach ochronnych miast.</p>
+              <div class="law-sanction-box">
+                <span>🛡️</span>
+                <div>Zakaz obejmuje zarówno ręczne stawianie takich bloków, jak i adaptowanie struktur naturalnie wygenerowanych przez świat, o ile dają one nieuczciwą przewagę taktyczną w obronie.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Art. 8 -->
+          <div class="law-card" data-searchable="art 8 zakaz fos plynnych barier sztucznych lava-casty sciany cieczy spadek fps">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 8</span>
+                <span>Zakaz fos płynnych i barier sztucznych</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Uczciwość Gry</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Zakazuje się zalewania murów miejskich i przedpola płynącą wodą lub lawą (tworzenie tzw. <em>lava-castów</em> i spływających kaskad cieczy) w celu wywołania spadków klatek na sekundę (FPS) u napastników lub uniemożliwienia standardowej interakcji wojennej.</p>
+              <p class="law-highlight">Każde miasto musi posiadać naturalny lub architektoniczny dostęp naziemny (np. bramę, trakt lub most).</p>
+            </div>
+          </div>
+
+          <!-- Art. 9 -->
+          <div class="law-card" data-searchable="art 9 prawo terytorialne blokowanie rozwoju enklawy odcinanie granic claimy">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 9</span>
+                <span>Prawo terytorialne i blokowanie rozwoju</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Geopolityka</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Zabrania się zajmowania terenu (claimowania działek) bezpośrednio wokół granic innego państwa lub miasta w celu <strong>celowego odcięcia mu drogi ekspansji terytorialnej</strong> (tworzenie sztucznych enklaw i pierścieni blokujących). Wszelkie sporne pasy ziemi podlegają arbitrażowi Sądu Serwerowego.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             ROZDZIAŁ III: STREFA NEUTRALNA EURAZJI I NOWI GRACZE
+             ========================================== -->
+        <div class="law-chapter-block" data-chapter-id="ch3">
+          <div class="law-chapter-banner peace">
+            <div class="law-chapter-info">
+              <h3>🕊️ Rozdział III: Strefa Neutralna Eurazji i Nowi Gracze</h3>
+              <p>Gwarancje nietykalności obszaru spawnu, azyl dla graczy pokojowych i ochrona początkujących przed spawn-campingiem.</p>
+            </div>
+            <div class="law-roman-badge">ROZDZIAŁ III</div>
+          </div>
+
+          <!-- Art. 10 -->
+          <div class="law-card severe" data-searchable="art 10 neutralnosc eurazji strefa spawnu azyl pacyfizm">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 10</span>
+                <span>Neutralność Eurazji (Strefa Spawnu)</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-war-court">Strefa Neutralna</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Prawny status neutralności:</strong> Terytorium państwa <strong>Eurazja</strong> stanowi strefę całkowicie neutralną znajdującą się pod bezpośrednią pieczą administracji. Jakakolwiek zbrojna agresja na Eurazję oraz jej członków poza oficjalnie wyznaczonymi eventami jest <strong style="color: var(--accent-red);">zbrodnią wojenną</strong>.</p>
+              <p><strong>2. Azyl dla pokojowych graczy:</strong> Gracze niechcący brać udziału w walkach PvP i agresywnej polityce wojennej mają prawo osiąść na terenie Eurazji, zyskując status trwałej nietykalności militarnej.</p>
+            </div>
+          </div>
+
+          <!-- Art. 11 -->
+          <div class="law-card" data-searchable="art 11 ochrona poczatkujacych spawn-camping polowanie na nowych graczy">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 11</span>
+                <span>Ochrona początkujących</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Ochrona Nowych</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Polowanie na nowo zarejestrowanych graczy opuszczających bezpieczne terytorium Eurazji (tzw. <em>spawn-camping</em>) w celu grabieży i uniemożliwienia im rozpoczęcia rozgrywki jest traktowane jako <strong>zbrodnia serwerowa</strong>.</p>
+              <div class="law-sanction-box peace-box">
+                <span>⚖️</span>
+                <div>Sprawcy podlegają karze przymusowych prac społecznych na rzecz poszkodowanych lub wysokiej grzywnie finansowej orzekanej przez Sąd Serwerowy.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             ROZDZIAŁ IV: KODEKS WOJENNY I KONFLIKTY ZBROJNE
+             ========================================== -->
+        <div class="law-chapter-block" data-chapter-id="ch4">
+          <div class="law-chapter-banner war">
+            <div class="law-chapter-info">
+              <h3>⚔️ Rozdział IV: Kodeks Wojenny i Konflikty Zbrojne</h3>
+              <p>Procedury wypowiadania wojen, zakazy zdrady, zakaz Crystal PvP, fake surrender, fikcyjnych oblężeń i ucieczki terytorialnej.</p>
+            </div>
+            <div class="law-roman-badge">ROZDZIAŁ IV</div>
+          </div>
+
+          <!-- Art. 12 -->
+          <div class="law-card" data-searchable="art 12 wypowiadanie harmonogram wojen termin walki bitwy osoby trzecie">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 12</span>
+                <span>Wypowiadanie i harmonogram wojen</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-war-court">Kodeks Wojenny</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Casus Belli:</strong> Wojnę można wypowiedzieć z dowolnego powodu politycznego lub terytorialnego.</p>
+              <p><strong>2. Uzgodnienie terminu:</strong> Władcy lub generałowie stron konfliktu mają obowiązek uzgodnić termin walki na ten sam tydzień (bądź kolejny w przypadku deklaracji w niedzielę).</p>
+              <p><strong>3. Okna czasowe:</strong> Rozegranie bitwy poza standardowymi oknami czasowymi PvP (18:00 – 22:00) wymaga uprzedniej formalnej zgody administracji.</p>
+              <p><strong>4. Zakaz ingerencji osób trzecich:</strong> Podczas trwania oficjalnej bitwy osoby trzecie spoza zwaśnionych nacji oraz oficjalnych sojuszy mają bezwzględny zakaz ingerencji w starcie.</p>
+            </div>
+          </div>
+
+          <!-- Art. 13 -->
+          <div class="law-card severe" data-searchable="art 13 sojusze zdrada wojenna wbijanie na trzeciego noz w plecy">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 13</span>
+                <span>Sojusze i zdrada wojenna</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-crime">Zbrodnia Wojenna</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Zakaz wbijania „na trzeciego”:</strong> Dołączenie państwa trzeciego do toczącej się wojny bez formalnego, publicznie zawartego wcześniej paktu obronnego lub sojuszu jest surowo zakazane.</p>
+              <div class="law-sanction-box">
+                <span>🗡️</span>
+                <div><strong>Zdrada wojenna:</strong> Zerwanie sojuszu lub wbicie noża w plecy sprzymierzeńcom bezpośrednio w trakcie toczonej bitwy jest zbrodnią podlegającą Sądowi Wojennemu i karaną Wiecznym Wygnaniem.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Art. 14 -->
+          <div class="law-card severe" data-searchable="art 14 zakazane formy walki crystal pvp krysztaly kresu uzbrojenie">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 14</span>
+                <span>Zakazane formy walki i uzbrojenia</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-crime">Zbrodnia Wojenna</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Wykorzystywanie mechaniki <strong>Crystal PvP</strong> (zadawanie obrażeń wybuchami kryształów Kresu stawianych na obsidianie/bedrocku w walce gracz kontra gracz) jest <strong style="color: var(--accent-red);">surowo wzbronione</strong> i kwalifikowane jako <strong>zbrodnia wojenna</strong> skutkująca natychmiastowym aresztem i konfiskatą ekwipunku.</p>
+            </div>
+          </div>
+
+          <!-- Art. 15 -->
+          <div class="law-card severe" data-searchable="art 15 etyka kapitulacji rozejmu fake surrender poddanie sie negocjacje">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 15</span>
+                <span>Etyka kapitulacji i rozejmu</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-crime">Zbrodnia Wojenna</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Udawanie poddania się, deklarowanie fałszywego rozejmu na czacie lub perfidne atakowanie przeciwnika w trakcie trwania oficjalnych negocjacji pokojowych w celu zyskania podstępnej przewagi taktycznej (tzw. <em>fake surrender</em>) stanowi <strong>zbrodnię wojenną</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Art. 16 -->
+          <div class="law-card severe" data-searchable="art 16 fikcyjne oblezenia fake sieges sztuczny immunitet zmowa bunt">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 16</span>
+                <span>Fikcyjne oblężenia (Fake Sieges)</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-crime">Zbrodnia Wojenna</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Wszczynanie pozorowanych oblężeń lub fikcyjnych buntów (np. w zmowie ze znajomą frakcją) wyłącznie w celu nadania miastu mechanicznej ochrony i immunitetu przed atakiem realnych wrogów jest zbrodnią wojenną.</p>
+              <div class="law-sanction-box">
+                <span>💰</span>
+                <div>Sprawcy podlegają karze <strong>pełnej konfiskaty skarbca miejskiego</strong> oraz wysokiej grzywnie orzekanej przez Sąd Wojenny.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Art. 17 -->
+          <div class="law-card severe" data-searchable="art 17 ucieczka terytorialna t delete usuwanie miasta unclaim homeblock">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 17</span>
+                <span>Ucieczka terytorialna w trakcie wojny</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-crime">Zbrodnia Wojenna</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Zakaz usuwania miasta:</strong> Usuwanie miasta komendami administracyjnymi (<code>/t delete</code>) w trakcie toczącego się konfliktu zbrojnego w celu ochrony majątku przed grabieżą jest zakazane.</p>
+              <p><strong>2. Manipulacja działkami:</strong> Celowe porzucanie kluczowych działek (<code>/t unclaim</code>) lub manipulowanie położeniem punktu centralnego miasta (homeblocka) w celu zablokowania mechanik oblężniczych jest zbrodnią wojenną.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             ROZDZIAŁ V: PORZĄDEK SPOŁECZNY, HANDEL I WYMIAR PENITENCJARNY
+             ========================================== -->
+        <div class="law-chapter-block" data-chapter-id="ch5">
+          <div class="law-chapter-banner">
+            <div class="law-chapter-info">
+              <h3>🛡️ Rozdział V: Porządek Społeczny, Handel i Wymiar Penitencjarny</h3>
+              <p>Bezpieczeństwo handlu, zakaz pułapek TPA, sankcje za sabotaż wewnętrzny (insiding), korupcję oraz standardy lochów miejskich.</p>
+            </div>
+            <div class="law-roman-badge">ROZDZIAŁ V</div>
+          </div>
+
+          <!-- Art. 18 -->
+          <div class="law-card court" data-searchable="art 18 przestepstwa handlowe pulapki oszustwa tpa zapadnie t spawn">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 18</span>
+                <span>Przestępstwa handlowe i pułapki</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Sąd Serwerowy</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Oszustwa handlowe:</strong> Wszelkie oszustwa przy bezpośrednim handlu między graczami stanowią zbrodnię serwerową zagrożoną karą grzywny, uwięzienia lub publicznej egzekucji.</p>
+              <p><strong>2. Pułapki teleportacyjne:</strong> Zastawianie pułapek z wykorzystaniem próśb o teleportację (<code>/tpa</code>) oraz tworzenie śmiertelnych zapadni w publicznych punktach odrodzenia miast (<code>/t spawn</code>) jest <strong>surowo zakazane</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Art. 19 -->
+          <div class="law-card severe" data-searchable="art 19 sabotaz wewnetrzny insiding okradanie miasta otwieranie bram szpiegostwo">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 19</span>
+                <span>Sabotaż wewnętrzny (Insiding)</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-crime">Zbrodnia Serwerowa</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Dołączanie do struktur obcego miasta lub nacji wyłącznie w celu okradzenia zasobów magazynowych, sabotażu systemów obronnych bądź podstępnego otwarcia bram wrogom podczas wojny jest zbrodnią serwerową.</p>
+              <div class="law-sanction-box">
+                <span>⚖️</span>
+                <div>Skutkuje natychmiastową konfiskatą skradzionego mienia, wielogodzinnym więzieniem lub karą <strong>banicji z serwera</strong>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Art. 20 -->
+          <div class="law-card court" data-searchable="art 20 naduzycia finansowe korupcja przelewanie srodkow komornik egzekucja">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 20</span>
+                <span>Nadużycia finansowe i korupcja</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Prawo Finansowe</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p>Przelewanie środków publicznych ze skarbców miejskich lub narodowych na prywatne konta burmistrzów i osób trzecich w obliczu upadku państwa bądź w celu uniknięcia egzekucji komorniczej nałożonej przez Sąd jest nielegalne. Fundusze podlegają <strong>natychmiastowej konfiskacie administracyjnej</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Art. 21 -->
+          <div class="law-card" data-searchable="art 21 standardy wieziennictwa miejskiego lochy cele kaucja bail spawnkill w celi">
+            <div class="law-card-header">
+              <div class="law-article-title">
+                <span class="law-article-num">Art. 21</span>
+                <span>Standardy więziennictwa miejskiego</span>
+              </div>
+              <div class="law-badges-wrap">
+                <span class="law-badge-court">Prawa Penitencjarne</span>
+              </div>
+            </div>
+            <div class="law-body">
+              <p><strong>1. Przeznaczenie cel:</strong> Cele więzienne mogą służyć wyłącznie do izolowania skazańców i jeńców wojennych (POW).</p>
+              <p><strong>2. Zakaz bezpodstawnych aresztowań:</strong> Zabrania się bezpodstawnego aresztowania nowo przybyłych mieszkańców.</p>
+              <p><strong>3. Uczciwa kaucja:</strong> Kaucja za uwolnienie (<em>bail</em>) musi mieścić się w rozsądnych granicach ekonomicznych serwera ($50 – $250).</p>
+              <div class="law-sanction-box">
+                <span>⛔</span>
+                <div><strong>Zakaz zabijania w celi:</strong> Bezwzględnie zabrania się permanentnego zabijania uwięzionego w celi (tzw. <em>spawnkill w celi</em>) w celu zmuszenia go do opuszczenia serwera.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- STOPKA STRONY -->
+  <footer class="wiki-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h4>HTALE.ONLINE</h4>
+        <p>
+          Unikalny serwer Minecraft 1.21+ łączący geopolityczne wojny miast Towny,
+          mechaniki RPG, customowe dungeony i taktyczny arsenał wojenny.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Nawigacja</h5>
+        <ul class="footer-links">
+          <li><a href="#wojny">Wojny & PvP</a></li>
+          <li><a href="#miasta">Działanie Miast</a></li>
+          <li><a href="#panstwa">System Państw</a></li>
+          <li><a href="#dungeony">Dungeony & Bossowie</a></li>
+          <li><a href="#przedmioty">Custom Przedmioty</a></li>
+          <li><a href="#regulamin">Kodeks Prawny</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Przydatne Linki</h5>
+        <ul class="footer-links">
+          <li><a href="https://htale.online" target="_blank" rel="noopener noreferrer">Strona Główna</a></li>
+          <li><a href="https://mapa.htale.online" target="_blank" rel="noopener noreferrer">Mapa 3D BlueMap</a></li>
+          <li><a href="https://dc.htale.online" target="_blank" rel="noopener noreferrer">Discord Społeczności</a></li>
+          <li><a href="https://sklep.htale.online" target="_blank" rel="noopener noreferrer">Sklep Serwera</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Informacje</h5>
+        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+          Wszedlkie błędy należy zgłaszać na discordzie bezpośrednie do <strong>@brawlsmons</strong>.
+          Znalezienie błędów jest nagradzane według admina.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 HTALE.ONLINE — Wszelkie prawa zastrzeżone. Projekt nie jest powiązany z Mojang AB ani Microsoft.</div>
+      <div>Designed with Passion for HTALE Community</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
