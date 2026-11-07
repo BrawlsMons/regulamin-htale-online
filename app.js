@@ -334,6 +334,64 @@ function initScrollSpy() {
 }
 
 // ============================================================
+// 8. LIGHTBOX DLA GALERII HISTORII (HISTORY LIGHTBOX)
+// ============================================================
+function initHistoryLightbox() {
+  const photoCards = document.querySelectorAll('.history-photo-card');
+  const lightbox = document.getElementById('history-lightbox');
+  if (!lightbox) return;
+
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+  const closeBtn = lightbox.querySelector('.lightbox-close-btn');
+
+  function openLightbox(src, caption) {
+    sfx.playClick();
+    lightboxImg.src = src;
+    lightboxCaption.textContent = caption || '';
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    sfx.playClick();
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  photoCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const img = card.querySelector('img');
+      const title = card.querySelector('.history-photo-title')?.textContent || '';
+      const desc = card.querySelector('.history-photo-desc')?.textContent || '';
+      const caption = title ? `${title} — ${desc}` : desc;
+      if (img) {
+        openLightbox(img.src, caption);
+      }
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeLightbox();
+    });
+  }
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+}
+
+// ============================================================
 // INICJALIZACJA PO ZAŁADOWANIU DOM
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -343,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLawFilters();
   initTownCalculator();
   initScrollSpy();
+  initHistoryLightbox();
 
   // Kopiowanie IP serwera
   const copyIpBtn = document.getElementById('btn-copy-ip');

@@ -63,6 +63,10 @@ Jeśli przechowujesz całe repozytorium serwera na GitHubie:
   - Domy i teleportacje z warmupem 5s.
 - **Katalog Komend**:
   - Klikalne przyciski „Kopiuj” z animowanym powiadomieniem Toast.
+- **🏛️ Kronika Dziejów & Historia Serwera**:
+  - Historyczne archiwum kluczowych wydarzeń, buntów i manifestacji na serwerze.
+  - Epizod I: **Greenpeace (06.11.2026)** — epicka kronika rewolty o Święty Dirt pod Spawnem, wzniesienie żywej ściółki leśnej, mistyczny znak pokoju ze śniegu bałwana, uwięzienie demonstrantów w deszczu oraz monumentalny pomnik „PDW” z diamentów i złota przeciwko Admin Abuse.
+  - Interaktywna galeria dowodów z powiększeniem Lightbox.
 - **⚖️ Kodeks Prawny i Regulamin Serwera (21 Artykułów w 5 Rozdziałach)**:
   - Dwuinstancyjny wymiar sprawiedliwości: **Sąd Serwerowy** (sprawy cywilne, gospodarcze, kary prac społecznych/finansowe) oraz **Sąd Wojenny** (zbrodnie militarne, zdrada stanu, Wieczne Wygnanie).
   - Ochrona integralności gry (zakaz X-Ray, KillAura, Baritone, exploitów, maszyn lagujących) oraz zakaz multikont.
